@@ -1,6 +1,8 @@
 package hu.poketerkep.api.json;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @SuppressWarnings("unused")
 public class PokemonJsonDto {
     private Long disappear_time;
@@ -9,6 +11,7 @@ public class PokemonJsonDto {
     private Double longitude;
     private Integer pokemon_id;
     private String pokemon_name;
+    @JsonIgnore
     private String spawnpoint_id;
 
     public Long getDisappear_time() {
