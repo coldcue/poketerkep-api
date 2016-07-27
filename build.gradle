@@ -12,8 +12,10 @@ buildscript {
 
 apply plugin: 'java'
 apply plugin: 'spring-boot'
+apply plugin: 'war'
+apply plugin: 'idea'
 
-jar {
+war {
 	baseName = 'poketerkep-api'
 	version = '0.1'
 }
@@ -24,17 +26,21 @@ repositories {
 	mavenCentral()
 }
 
+configurations {
+	providedRuntime
+}
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-actuator')
-	compile('org.springframework.boot:spring-boot-starter-cache')
-	compile('org.springframework.cloud:spring-cloud-starter-aws')
-	compile('org.springframework.boot:spring-boot-starter-security')
-	compile('org.springframework.boot:spring-boot-starter-social-facebook')
+	//compile('org.springframework.boot:spring-boot-starter-actuator')
+	//compile('org.springframework.boot:spring-boot-starter-cache')
+	//compile('org.springframework.cloud:spring-cloud-starter-aws')
+	//compile('org.springframework.boot:spring-boot-starter-security')
+	//compile('org.springframework.boot:spring-boot-starter-social-facebook')
 	compile('org.springframework.boot:spring-boot-starter-web')
-	compile('org.springframework.boot:spring-boot-starter-ws')
-	compile('org.springframework.boot:spring-boot-starter-websocket')
+	//compile('org.springframework.boot:spring-boot-starter-ws')
+	//compile('org.springframework.boot:spring-boot-starter-websocket')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+	providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 }
 
 dependencyManagement {
