@@ -19,6 +19,8 @@ public class RawDataJsonDto {
     @JsonProperty(required = true)
     private List<ScannedJsonDto> scanned;
 
+    private Long requestTime;
+
     public RawDataJsonDto() {
         scanned = new ArrayList<>();
         pokestops = new ArrayList<>();
@@ -56,5 +58,13 @@ public class RawDataJsonDto {
 
     public void setScanned(List<ScannedJsonDto> scanned) {
         this.scanned = scanned;
+    }
+
+    public Long getRequestTime() {
+        return requestTime;
+    }
+
+    public void setRequestTime(Long requestTime) {
+        this.requestTime = requestTime;
     }
 }
