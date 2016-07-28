@@ -6,7 +6,6 @@ import hu.poketerkep.api.mapper.PokemonMapper;
 import hu.poketerkep.api.model.Pokemon;
 import hu.poketerkep.api.service.PokemonDataService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,7 +26,6 @@ public class GameController {
     }
 
     @RequestMapping(value = "/game", method = RequestMethod.GET)
-    @Cacheable("api")
     public RawDataJsonDto game(@RequestParam(required = false) Long since) {
 
         RawDataJsonDto rawData = new RawDataJsonDto();
