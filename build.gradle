@@ -1,13 +1,13 @@
 buildscript {
-	ext {
-		springBootVersion = '1.3.6.RELEASE'
-	}
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
+    ext {
+        springBootVersion = '1.3.6.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
 }
 
 apply plugin: 'java'
@@ -16,30 +16,31 @@ apply plugin: 'war'
 apply plugin: 'idea'
 
 war {
-	baseName = 'poketerkep-api'
-	version = '0.1'
+    baseName = 'poketerkep-api'
+    version = '0.1'
 }
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 configurations {
-	providedRuntime
+    providedRuntime
 }
 
 dependencies {
-	//compile('org.springframework.boot:spring-boot-starter-actuator')
-	//compile('org.springframework.boot:spring-boot-starter-cache')
-	//compile('org.springframework.cloud:spring-cloud-starter-aws')
-	//compile('org.springframework.boot:spring-boot-starter-security')
-	//compile('org.springframework.boot:spring-boot-starter-social-facebook')
-	compile('org.springframework.boot:spring-boot-starter-web')
-	//compile('org.springframework.boot:spring-boot-starter-ws')
-	//compile('org.springframework.boot:spring-boot-starter-websocket')
-	compile('com.amazonaws:aws-java-sdk:1.11.20')
-	testCompile('org.springframework.boot:spring-boot-starter-test')
-	providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+    //compile('org.springframework.boot:spring-boot-starter-actuator')
+    //compile('org.springframework.boot:spring-boot-starter-cache')
+    //compile('org.springframework.cloud:spring-cloud-starter-aws')
+    //compile('org.springframework.boot:spring-boot-starter-security')
+    //compile('org.springframework.boot:spring-boot-starter-social-facebook')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    //compile('org.springframework.boot:spring-boot-starter-ws')
+    //compile('org.springframework.boot:spring-boot-starter-websocket')
+    compile('com.amazonaws:aws-java-sdk:1.11.20')
+    compile('com.google.guava:guava:19.0')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 }

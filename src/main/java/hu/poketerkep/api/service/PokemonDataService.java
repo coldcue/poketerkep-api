@@ -25,7 +25,7 @@ public class PokemonDataService {
         this.amazonDynamoDBAsync = amazonDynamoDBAsync;
     }
 
-    @Cacheable("pokemons")
+    @Cacheable("allPokemonCache")
     public List<Pokemon> getAllPokemons() {
         ScanRequest scanRequest = new ScanRequest()
                 .withTableName(POKEMONS_TABLE);
