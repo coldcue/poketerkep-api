@@ -1,0 +1,12 @@
+deploy:
+  artifact: build/libs/poketerkep-api-0.1.war
+branch-defaults:
+  dev-profile:
+    environment: poketerkep-api-dev
+global:
+  application_name: poketerkep-api
+  default_ec2_keyname: aws
+  default_platform: 64bit Amazon Linux 2016.03 v2.1.3 running Tomcat 8 Java 8
+  default_region: eu-west-1
+  profile: null
+  sc: git
