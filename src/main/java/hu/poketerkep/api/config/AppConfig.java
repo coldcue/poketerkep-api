@@ -18,7 +18,7 @@ import java.util.Arrays;
 @Configuration
 public class AppConfig {
 
-    private static final String DEVELOPMENT_PROFILE = "DEVELOPMENT_PROFILE";
+    private static final String DEVELOPMENT_PROFILE = "development";
     @Autowired
     Environment env;
 
