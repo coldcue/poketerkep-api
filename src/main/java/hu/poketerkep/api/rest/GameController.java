@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 @RestController
@@ -37,11 +38,16 @@ public class GameController {
 
         RawDataJsonDto rawData = new RawDataJsonDto();
 
-        List<Pokemon> pokemons = pokemonDataService.getAllPokemons();
+        Stream<Pokemon> pokemonStream = pokemonDataService.getAllPokemons().stream();
+
+        long now = Instant.now().toEpochMilli();
+
+        // Filter old pokemons
+        pokemonStream.filter(pokemon -> pokemon.getDisappearTime() > now);
 
         // Time filter
         if (since != null) {
-            pokemons = pokemons.parallelStream()
+            pokemonStream
                     //If the pokemon's disappear time minus 15 mins is bigger then since
                     .filter(pokemon -> pokemon.getDisappearTime() - 15 * 60 * 1000 > since)
                     .collect(Collectors.toList());
@@ -49,16 +55,16 @@ public class GameController {
 
         // Geospatial filter
         if (neLat != null && neLng != null && swLat != null && swLng != null) {
-            GeospatialPokemonFilter geospatialPokemonFilter = new GeospatialPokemonFilter(pokemons);
+            GeospatialPokemonFilter geospatialPokemonFilter = new GeospatialPokemonFilter(pokemonStream);
 
             Coordinate northEast = new Coordinate(neLat, neLng);
             Coordinate southWest = new Coordinate(swLat, swLng);
 
-            pokemons = geospatialPokemonFilter.filter(northEast, southWest);
+            pokemonStream = geospatialPokemonFilter.filter(northEast, southWest);
         }
 
         // Map to JSON DTO
-        List<PokemonJsonDto> pokemonJsonDtos = pokemons.parallelStream()
+        List<PokemonJsonDto> pokemonJsonDtos = pokemonStream
                 .map(PokemonMapper::mapToJsonDto)
                 .collect(Collectors.toList());
 

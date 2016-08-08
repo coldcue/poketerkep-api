@@ -6,6 +6,8 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class GeospatialPokemonFilterTest {
 
@@ -49,8 +51,11 @@ public class GeospatialPokemonFilterTest {
         pokemon5_1.setLatitude(5.0);
         pokemons.add(pokemon1_5);
 
-        GeospatialPokemonFilter geospatialPokemonFilter = new GeospatialPokemonFilter(pokemons);
-        List<Pokemon> filter = geospatialPokemonFilter.filter(new Coordinate(4.0, 4.0), new Coordinate(1.0, 1.0));
+        Stream<Pokemon> pokemonStream = pokemons.stream();
+        GeospatialPokemonFilter geospatialPokemonFilter = new GeospatialPokemonFilter(pokemonStream);
+        List<Pokemon> filter = geospatialPokemonFilter
+                .filter(new Coordinate(4.0, 4.0), new Coordinate(1.0, 1.0))
+                .collect(Collectors.toList());
 
         Assert.assertTrue(filter.contains(pokemon2_2));
         Assert.assertTrue(filter.contains(pokemon3_3));
