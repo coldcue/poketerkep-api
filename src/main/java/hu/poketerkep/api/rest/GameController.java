@@ -1,7 +1,7 @@
 package hu.poketerkep.api.rest;
 
 import hu.poketerkep.api.helper.Coordinate;
-import hu.poketerkep.api.helper.GeospatialPokemonFilter;
+import hu.poketerkep.api.helper.PokemonFilter;
 import hu.poketerkep.api.json.PokemonJsonDto;
 import hu.poketerkep.api.json.RawDataJsonDto;
 import hu.poketerkep.api.mapper.PokemonMapper;
@@ -35,30 +35,22 @@ public class GameController {
             @RequestParam(required = false) Double swLng,
             @RequestParam(required = false) Long since) {
 
-        RawDataJsonDto rawData = new RawDataJsonDto();
 
-        List<Pokemon> pokemons = pokemonDataService.getAllPokemons();
-
-        // Time filter
-        if (since != null) {
-            pokemons = pokemons.parallelStream()
-                    //If the pokemon's disappear time minus 15 mins is bigger then since
-                    .filter(pokemon -> pokemon.getDisappearTime() - 15 * 60 * 1000 > since)
-                    .collect(Collectors.toList());
-        }
-
-        // Geospatial filter
+        // Convert coordinates
+        Coordinate northEast = null;
+        Coordinate southWest = null;
         if (neLat != null && neLng != null && swLat != null && swLng != null) {
-            GeospatialPokemonFilter geospatialPokemonFilter = new GeospatialPokemonFilter(pokemons);
-
-            Coordinate northEast = new Coordinate(neLat, neLng);
-            Coordinate southWest = new Coordinate(swLat, swLng);
-
-            pokemons = geospatialPokemonFilter.filter(northEast, southWest);
+            northEast = new Coordinate(neLat, neLng);
+            southWest = new Coordinate(swLat, swLng);
         }
+
+        // Get and filter pokemons
+        PokemonFilter pokemonFilter = new PokemonFilter(northEast, southWest, since);
+        List<Pokemon> pokemons = pokemonFilter.doFilter(pokemonDataService.getAllPokemons());
 
         // Map to JSON DTO
-        List<PokemonJsonDto> pokemonJsonDtos = pokemons.parallelStream()
+        RawDataJsonDto rawData = new RawDataJsonDto();
+        List<PokemonJsonDto> pokemonJsonDtos = pokemons.stream()
                 .map(PokemonMapper::mapToJsonDto)
                 .collect(Collectors.toList());
 
