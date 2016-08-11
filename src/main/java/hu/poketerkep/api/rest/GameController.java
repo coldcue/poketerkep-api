@@ -5,6 +5,7 @@ import hu.poketerkep.api.json.PokemonJsonDto;
 import hu.poketerkep.api.json.RawDataJsonDto;
 import hu.poketerkep.api.mapper.PokemonMapper;
 import hu.poketerkep.api.model.Pokemon;
+import hu.poketerkep.api.rest.query.GameQueryJson;
 import hu.poketerkep.api.service.PokemonDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
