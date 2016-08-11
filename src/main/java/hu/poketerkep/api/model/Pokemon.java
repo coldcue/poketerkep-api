@@ -10,6 +10,19 @@ public class Pokemon {
     private String pokemonName;
     private String spawnpointId;
 
+    public Pokemon() {
+    }
+
+    public Pokemon(String encounterId, Long disappearTime, Double latitude, Double longitude, Integer pokemonId, String pokemonName, String spawnpointId) {
+        this.encounterId = encounterId;
+        this.disappearTime = disappearTime;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.pokemonId = pokemonId;
+        this.pokemonName = pokemonName;
+        this.spawnpointId = spawnpointId;
+    }
+
     public String getEncounterId() {
         return encounterId;
     }
