@@ -10,6 +10,7 @@ public class PokemonJsonDto {
     private Double latitude;
     private Double longitude;
     private Integer pokemon_id;
+    @JsonIgnore
     private String pokemon_name;
     @JsonIgnore
     private String spawnpoint_id;
