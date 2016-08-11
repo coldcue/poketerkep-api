@@ -1,7 +1,7 @@
 package hu.poketerkep.api.helper;
 
 import hu.poketerkep.api.model.Pokemon;
-import hu.poketerkep.api.rest.GameQueryJson;
+import hu.poketerkep.api.rest.query.GameQueryJson;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -71,10 +71,12 @@ public class PokemonFilterTest {
         gameQueryJson.setSelectedPokemons(Collections.emptyList());
         gameQueryJson.setShowOrHide(true);
 
-        gameQueryJson.setNeLng(4.0);
-        gameQueryJson.setNeLat(4.0);
-        gameQueryJson.setSwLng(1.0);
-        gameQueryJson.setSwLat(1.0);
+        GameQueryJson.Bounds bounds = new GameQueryJson.Bounds();
+        bounds.setNeLng(4.0);
+        bounds.setNeLat(4.0);
+        bounds.setSwLng(1.0);
+        bounds.setSwLat(1.0);
+        gameQueryJson.setBounds(bounds);
 
         PokemonFilter pokemonFilter = new PokemonFilter(gameQueryJson);
 
@@ -132,10 +134,12 @@ public class PokemonFilterTest {
             gameQueryJson.setSelectedPokemons(Collections.singletonList(1));
             gameQueryJson.setShowOrHide(true);
 
-            gameQueryJson.setNeLng(4.0);
-            gameQueryJson.setNeLat(4.0);
-            gameQueryJson.setSwLng(1.0);
-            gameQueryJson.setSwLat(1.0);
+            GameQueryJson.Bounds bounds = new GameQueryJson.Bounds();
+            bounds.setNeLng(4.0);
+            bounds.setNeLat(4.0);
+            bounds.setSwLng(1.0);
+            bounds.setSwLat(1.0);
+            gameQueryJson.setBounds(bounds);
 
             PokemonFilter showOnly1 = new PokemonFilter(gameQueryJson);
             List<Pokemon> showOnly1Result = showOnly1.doFilter(allPokemons);
@@ -154,10 +158,12 @@ public class PokemonFilterTest {
             gameQueryJson.setSelectedPokemons(Collections.singletonList(1));
             gameQueryJson.setShowOrHide(false);
 
-            gameQueryJson.setNeLng(4.0);
-            gameQueryJson.setNeLat(4.0);
-            gameQueryJson.setSwLng(1.0);
-            gameQueryJson.setSwLat(1.0);
+            GameQueryJson.Bounds bounds = new GameQueryJson.Bounds();
+            bounds.setNeLng(4.0);
+            bounds.setNeLat(4.0);
+            bounds.setSwLng(1.0);
+            bounds.setSwLat(1.0);
+            gameQueryJson.setBounds(bounds);
 
             PokemonFilter showOnly1 = new PokemonFilter(gameQueryJson);
             List<Pokemon> showOnly1Result = showOnly1.doFilter(allPokemons);
@@ -176,10 +182,12 @@ public class PokemonFilterTest {
             gameQueryJson.setSelectedPokemons(Collections.emptyList());
             gameQueryJson.setShowOrHide(true);
 
-            gameQueryJson.setNeLng(4.0);
-            gameQueryJson.setNeLat(4.0);
-            gameQueryJson.setSwLng(1.0);
-            gameQueryJson.setSwLat(1.0);
+            GameQueryJson.Bounds bounds = new GameQueryJson.Bounds();
+            bounds.setNeLng(4.0);
+            bounds.setNeLat(4.0);
+            bounds.setSwLng(1.0);
+            bounds.setSwLat(1.0);
+            gameQueryJson.setBounds(bounds);
 
             PokemonFilter showOnly1 = new PokemonFilter(gameQueryJson);
             List<Pokemon> showOnly1Result = showOnly1.doFilter(allPokemons);

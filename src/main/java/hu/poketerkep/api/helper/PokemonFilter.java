@@ -1,7 +1,7 @@
 package hu.poketerkep.api.helper;
 
 import hu.poketerkep.api.model.Pokemon;
-import hu.poketerkep.api.rest.GameQueryJson;
+import hu.poketerkep.api.rest.query.GameQueryJson;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -12,9 +12,6 @@ import java.util.stream.Collectors;
 
 public class PokemonFilter {
 
-    private final Coordinate northEast;
-    private final Coordinate southWest;
-    private final Optional<Long> since;
     private final Predicate<Pokemon> oldPokemonPredicate;
     private final Predicate<Pokemon> sincePredicate;
     private final Predicate<Pokemon> longitudePredicate;
@@ -23,9 +20,10 @@ public class PokemonFilter {
     private final GameQueryJson query;
 
     public PokemonFilter(GameQueryJson query) {
-        this.northEast = new Coordinate(query.getNeLat(), query.getNeLng());
-        this.southWest = new Coordinate(query.getSwLat(), query.getSwLng());
-        this.since = Optional.ofNullable(query.getSince());
+        final GameQueryJson.Bounds bounds = query.getBounds();
+        final Coordinate northEast = new Coordinate(bounds.getNeLat(), bounds.getNeLng());
+        final Coordinate southWest = new Coordinate(bounds.getSwLat(), bounds.getSwLng());
+        Optional<Long> since = Optional.ofNullable(query.getSince());
         this.query = query;
 
         // Create predicates
@@ -40,7 +38,7 @@ public class PokemonFilter {
         oldPokemonPredicate = pokemon -> pokemon.getDisappearTime() > now;
 
         // Since filter
-        sincePredicate = pokemon -> !hasSinceFilter() || pokemon.getDisappearTime() - 15 * 60 * 1000 > since.get();
+        sincePredicate = pokemon -> !since.isPresent() || pokemon.getDisappearTime() - 15 * 60 * 1000 > since.get();
 
         // Sort by longitude
         longitudePredicate = pokemon -> pokemon.getLongitude() >= southWest.getLongitude()
@@ -71,9 +69,5 @@ public class PokemonFilter {
                 .filter(latitudePredicate)
                 .filter(typeFilterPredicate)
                 .collect(Collectors.toList());
-    }
-
-    private boolean hasSinceFilter() {
-        return since.isPresent();
     }
 }

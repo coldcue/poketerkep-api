@@ -1,4 +1,4 @@
-package hu.poketerkep.api.rest;
+package hu.poketerkep.api.rest.query;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -6,13 +6,7 @@ import java.util.List;
 
 public class GameQueryJson {
     @JsonProperty(required = true)
-    private double neLat;
-    @JsonProperty(required = true)
-    private double neLng;
-    @JsonProperty(required = true)
-    private double swLat;
-    @JsonProperty(required = true)
-    private double swLng;
+    private Bounds bounds;
 
     @JsonProperty(required = true)
     private boolean gyms;
@@ -27,38 +21,6 @@ public class GameQueryJson {
     private List<Integer> selectedPokemons;
 
     private Long since;
-
-    public double getNeLat() {
-        return neLat;
-    }
-
-    public void setNeLat(double neLat) {
-        this.neLat = neLat;
-    }
-
-    public double getNeLng() {
-        return neLng;
-    }
-
-    public void setNeLng(double neLng) {
-        this.neLng = neLng;
-    }
-
-    public double getSwLat() {
-        return swLat;
-    }
-
-    public void setSwLat(double swLat) {
-        this.swLat = swLat;
-    }
-
-    public double getSwLng() {
-        return swLng;
-    }
-
-    public void setSwLng(double swLng) {
-        this.swLng = swLng;
-    }
 
     public boolean isGyms() {
         return gyms;
@@ -106,5 +68,56 @@ public class GameQueryJson {
 
     public void setSince(Long since) {
         this.since = since;
+    }
+
+    public Bounds getBounds() {
+        return bounds;
+    }
+
+    public void setBounds(Bounds bounds) {
+        this.bounds = bounds;
+    }
+
+    public static class Bounds {
+        @JsonProperty(required = true)
+        private double neLat;
+        @JsonProperty(required = true)
+        private double neLng;
+        @JsonProperty(required = true)
+        private double swLat;
+        @JsonProperty(required = true)
+        private double swLng;
+
+        public double getNeLat() {
+            return neLat;
+        }
+
+        public void setNeLat(double neLat) {
+            this.neLat = neLat;
+        }
+
+        public double getNeLng() {
+            return neLng;
+        }
+
+        public void setNeLng(double neLng) {
+            this.neLng = neLng;
+        }
+
+        public double getSwLat() {
+            return swLat;
+        }
+
+        public void setSwLat(double swLat) {
+            this.swLat = swLat;
+        }
+
+        public double getSwLng() {
+            return swLng;
+        }
+
+        public void setSwLng(double swLng) {
+            this.swLng = swLng;
+        }
     }
 }
