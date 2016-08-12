@@ -24,8 +24,8 @@ public class CacheConfig extends CachingConfigurerSupport {
             protected Cache createConcurrentMapCache(String name) {
                 return new ConcurrentMapCache(ALL_POKEMON_CACHE,
                         CacheBuilder.newBuilder()
-                                .expireAfterWrite(15, TimeUnit.SECONDS)
-                                .maximumSize(100)
+                                .expireAfterWrite(30, TimeUnit.SECONDS)
+                                .maximumSize(10000)
                                 .build().asMap(), false);
             }
         };
