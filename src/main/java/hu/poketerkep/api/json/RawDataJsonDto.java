@@ -4,59 +4,58 @@ package hu.poketerkep.api.json;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 
 @SuppressWarnings("unused")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RawDataJsonDto {
     @JsonProperty(required = true)
-    private List<GymJsonDto> gyms;
+    private HashSet<GymJsonDto> gyms;
     @JsonProperty(required = true)
-    private List<PokemonJsonDto> pokemons;
+    private HashSet<PokemonJsonDto> pokemons;
     @JsonProperty(required = true)
-    private List<PokestopJsonDto> pokestops;
+    private HashSet<PokestopJsonDto> pokestops;
     @JsonProperty(required = true)
-    private List<ScannedJsonDto> scanned;
+    private HashSet<ScannedJsonDto> scanned;
 
     private Long requestTime;
 
     public RawDataJsonDto() {
-        scanned = new ArrayList<>();
-        pokestops = new ArrayList<>();
-        pokemons = new ArrayList<>();
-        gyms = new ArrayList<>();
+        scanned = new HashSet<>();
+        pokestops = new HashSet<>();
+        pokemons = new HashSet<>();
+        gyms = new HashSet<>();
     }
 
-    public List<GymJsonDto> getGyms() {
+    public HashSet<GymJsonDto> getGyms() {
         return gyms;
     }
 
-    public void setGyms(List<GymJsonDto> gyms) {
+    public void setGyms(HashSet<GymJsonDto> gyms) {
         this.gyms = gyms;
     }
 
-    public List<PokemonJsonDto> getPokemons() {
+    public HashSet<PokemonJsonDto> getPokemons() {
         return pokemons;
     }
 
-    public void setPokemons(List<PokemonJsonDto> pokemons) {
+    public void setPokemons(HashSet<PokemonJsonDto> pokemons) {
         this.pokemons = pokemons;
     }
 
-    public List<PokestopJsonDto> getPokestops() {
+    public HashSet<PokestopJsonDto> getPokestops() {
         return pokestops;
     }
 
-    public void setPokestops(List<PokestopJsonDto> pokestops) {
+    public void setPokestops(HashSet<PokestopJsonDto> pokestops) {
         this.pokestops = pokestops;
     }
 
-    public List<ScannedJsonDto> getScanned() {
+    public HashSet<ScannedJsonDto> getScanned() {
         return scanned;
     }
 
-    public void setScanned(List<ScannedJsonDto> scanned) {
+    public void setScanned(HashSet<ScannedJsonDto> scanned) {
         this.scanned = scanned;
     }
 
