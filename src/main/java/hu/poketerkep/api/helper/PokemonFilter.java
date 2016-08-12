@@ -4,11 +4,11 @@ import hu.poketerkep.api.model.Pokemon;
 import hu.poketerkep.api.rest.query.GameQueryJson;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 public class PokemonFilter {
 
@@ -57,17 +57,21 @@ public class PokemonFilter {
 
     }
 
-    public List<Pokemon> doFilter(List<Pokemon> pokemonList) {
+    public Collection<Pokemon> doFilter(Collection<Pokemon> pokemonList) {
         // Return empty list if pokemons are hidden
         if (!query.isPokemons())
-            return new ArrayList<>();
+            return Collections.emptySet();
 
-        return pokemonList.stream()
+        HashSet<Pokemon> result = new HashSet<>();
+
+        pokemonList.stream()
                 .filter(oldPokemonPredicate)
                 .filter(sincePredicate)
                 .filter(longitudePredicate)
                 .filter(latitudePredicate)
                 .filter(typeFilterPredicate)
-                .collect(Collectors.toList());
+                .forEach(result::add);
+
+        return result;
     }
 }

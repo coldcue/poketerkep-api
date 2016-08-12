@@ -40,7 +40,6 @@ dependencies {
     //compile('org.springframework.boot:spring-boot-starter-ws')
     //compile('org.springframework.boot:spring-boot-starter-websocket')
     compile('com.amazonaws:aws-java-sdk:1.11.20')
-    compile('com.google.guava:guava:19.0')
     testCompile('org.springframework.boot:spring-boot-starter-test')
     providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 }
