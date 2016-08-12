@@ -13,10 +13,12 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Logger;
 
 @Service
 public class PokemonDataService {
     private static final String POKEMONS_TABLE = "pokemons";
+    private final Logger log = Logger.getLogger(this.getClass().getName());
     private final AmazonDynamoDBAsync amazonDynamoDBAsync;
 
     // Concurrent Hash Set
@@ -41,8 +43,10 @@ public class PokemonDataService {
      */
     @Scheduled(fixedRate = 30 * 1000, initialDelay = 0)
     public void refreshCache() {
+        log.info("Refreshing pokemons cache...");
         cachedPokemons.clear();
         cachedPokemons.addAll(getPokemonsFromDatabase());
+        log.info("Done! " + cachedPokemons.size() + " pokemons fetched");
     }
 
     /**
