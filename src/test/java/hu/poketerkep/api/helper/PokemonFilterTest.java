@@ -5,10 +5,7 @@ import hu.poketerkep.api.rest.query.GameQueryJson;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 
 public class PokemonFilterTest {
@@ -80,7 +77,7 @@ public class PokemonFilterTest {
 
         PokemonFilter pokemonFilter = new PokemonFilter(gameQueryJson);
 
-        List<Pokemon> filter = pokemonFilter.doFilter(pokemons);
+        Collection<Pokemon> filter = pokemonFilter.doFilter(pokemons);
 
         Assert.assertTrue(filter.contains(pokemon2_2));
         Assert.assertTrue(filter.contains(pokemon3_3));
@@ -142,7 +139,7 @@ public class PokemonFilterTest {
             gameQueryJson.setBounds(bounds);
 
             PokemonFilter showOnly1 = new PokemonFilter(gameQueryJson);
-            List<Pokemon> showOnly1Result = showOnly1.doFilter(allPokemons);
+            Collection<Pokemon> showOnly1Result = showOnly1.doFilter(allPokemons);
 
             Assert.assertTrue("It should only show pokemons with ID 1",
                     showOnly1Result.containsAll(pokemonsWithId1) && showOnly1Result.size() == 4);
@@ -166,7 +163,7 @@ public class PokemonFilterTest {
             gameQueryJson.setBounds(bounds);
 
             PokemonFilter showOnly1 = new PokemonFilter(gameQueryJson);
-            List<Pokemon> showOnly1Result = showOnly1.doFilter(allPokemons);
+            Collection<Pokemon> showOnly1Result = showOnly1.doFilter(allPokemons);
 
             Assert.assertTrue("It should only show pokemons with not ID 1",
                     showOnly1Result.containsAll(pokemonsWithOtherIds) && showOnly1Result.size() == 4);
@@ -190,7 +187,7 @@ public class PokemonFilterTest {
             gameQueryJson.setBounds(bounds);
 
             PokemonFilter showOnly1 = new PokemonFilter(gameQueryJson);
-            List<Pokemon> showOnly1Result = showOnly1.doFilter(allPokemons);
+            Collection<Pokemon> showOnly1Result = showOnly1.doFilter(allPokemons);
 
             Assert.assertTrue("It should show all pokemons",
                     showOnly1Result.containsAll(allPokemons) && showOnly1Result.size() == 8);

@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Instant;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Collection;
+import java.util.HashSet;
 
 
 @RestController
@@ -32,13 +32,16 @@ public class GameController {
 
         // Get and filter pokemons
         PokemonFilter pokemonFilter = new PokemonFilter(query);
-        List<Pokemon> pokemons = pokemonFilter.doFilter(pokemonDataService.getAllPokemons());
+        Collection<Pokemon> pokemons = pokemonFilter.doFilter(pokemonDataService.getAllPokemons());
 
         // Map to JSON DTO
         RawDataJsonDto rawData = new RawDataJsonDto();
-        List<PokemonJsonDto> pokemonJsonDtos = pokemons.stream()
+
+        // Convert pokemons to JSON dto
+        HashSet<PokemonJsonDto> pokemonJsonDtos = new HashSet<>(pokemons.size());
+        pokemons.stream()
                 .map(PokemonMapper::mapToJsonDto)
-                .collect(Collectors.toList());
+                .forEach(pokemonJsonDtos::add);
 
         rawData.setPokemons(pokemonJsonDtos);
         rawData.setRequestTime(Instant.now().toEpochMilli());
