@@ -5,12 +5,12 @@ import hu.poketerkep.api.json.PokemonJsonDto;
 import hu.poketerkep.api.json.RawDataJsonDto;
 import hu.poketerkep.api.mapper.PokemonMapper;
 import hu.poketerkep.api.model.Pokemon;
-import hu.poketerkep.api.rest.query.GameQueryJson;
+import hu.poketerkep.api.rest.query.GameQuery;
 import hu.poketerkep.api.service.PokemonDataService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.Instant;
@@ -19,6 +19,7 @@ import java.util.HashSet;
 
 
 @RestController
+@RequestMapping("/game")
 public class GameController {
     private final PokemonDataService pokemonDataService;
 
@@ -27,8 +28,8 @@ public class GameController {
         this.pokemonDataService = pokemonDataService;
     }
 
-    @RequestMapping(value = "/game", method = RequestMethod.POST)
-    public RawDataJsonDto game(@RequestBody GameQueryJson query) {
+    @GetMapping(produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public RawDataJsonDto game(GameQuery query) {
 
         // Get and filter pokemons
         PokemonFilter pokemonFilter = new PokemonFilter(query);

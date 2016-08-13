@@ -1,11 +1,14 @@
 package hu.poketerkep.api.helper;
 
 import hu.poketerkep.api.model.Pokemon;
-import hu.poketerkep.api.rest.query.GameQueryJson;
+import hu.poketerkep.api.rest.query.GameQuery;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 
 
 public class PokemonFilterTest {
@@ -60,22 +63,19 @@ public class PokemonFilterTest {
         pokemon5_1.setDisappearTime(disappearTime);
         pokemons.add(pokemon1_5);
 
-        GameQueryJson gameQueryJson = new GameQueryJson();
-        gameQueryJson.setGyms(false);
-        gameQueryJson.setPokestops(false);
-        gameQueryJson.setPokemons(true);
-        gameQueryJson.setSince(null);
-        gameQueryJson.setSelectedPokemons(Collections.emptyList());
-        gameQueryJson.setShowOrHide(true);
+        GameQuery gameQuery = new GameQuery();
+        gameQuery.setGyms(false);
+        gameQuery.setPokestops(false);
+        gameQuery.setPokemons(true);
+        gameQuery.setSince(null);
+        gameQuery.setShowOrHide(true);
 
-        GameQueryJson.Bounds bounds = new GameQueryJson.Bounds();
-        bounds.setNeLng(4.0);
-        bounds.setNeLat(4.0);
-        bounds.setSwLng(1.0);
-        bounds.setSwLat(1.0);
-        gameQueryJson.setBounds(bounds);
+        gameQuery.setNeLng(4.0);
+        gameQuery.setNeLat(4.0);
+        gameQuery.setSwLng(1.0);
+        gameQuery.setSwLat(1.0);
 
-        PokemonFilter pokemonFilter = new PokemonFilter(gameQueryJson);
+        PokemonFilter pokemonFilter = new PokemonFilter(gameQuery);
 
         Collection<Pokemon> filter = pokemonFilter.doFilter(pokemons);
 
@@ -123,22 +123,23 @@ public class PokemonFilterTest {
 
         // Show only pokemons with ID 1
         {
-            GameQueryJson gameQueryJson = new GameQueryJson();
-            gameQueryJson.setGyms(false);
-            gameQueryJson.setPokestops(false);
-            gameQueryJson.setPokemons(true);
-            gameQueryJson.setSince(null);
-            gameQueryJson.setSelectedPokemons(Collections.singletonList(1));
-            gameQueryJson.setShowOrHide(true);
+            GameQuery gameQuery = new GameQuery();
 
-            GameQueryJson.Bounds bounds = new GameQueryJson.Bounds();
-            bounds.setNeLng(4.0);
-            bounds.setNeLat(4.0);
-            bounds.setSwLng(1.0);
-            bounds.setSwLat(1.0);
-            gameQueryJson.setBounds(bounds);
+            gameQuery.setGyms(false);
+            gameQuery.setPokestops(false);
+            gameQuery.setPokemons(true);
 
-            PokemonFilter showOnly1 = new PokemonFilter(gameQueryJson);
+            gameQuery.setSelectedPokemons("AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
+            gameQuery.setShowOrHide(true);
+
+            gameQuery.setNeLng(4.0);
+            gameQuery.setNeLat(4.0);
+            gameQuery.setSwLng(1.0);
+            gameQuery.setSwLat(1.0);
+
+            gameQuery.setSince(null);
+
+            PokemonFilter showOnly1 = new PokemonFilter(gameQuery);
             Collection<Pokemon> showOnly1Result = showOnly1.doFilter(allPokemons);
 
             Assert.assertTrue("It should only show pokemons with ID 1",
@@ -147,22 +148,23 @@ public class PokemonFilterTest {
 
         // Show only pokemons with not ID 1
         {
-            GameQueryJson gameQueryJson = new GameQueryJson();
-            gameQueryJson.setGyms(false);
-            gameQueryJson.setPokestops(false);
-            gameQueryJson.setPokemons(true);
-            gameQueryJson.setSince(null);
-            gameQueryJson.setSelectedPokemons(Collections.singletonList(1));
-            gameQueryJson.setShowOrHide(false);
+            GameQuery gameQuery = new GameQuery();
 
-            GameQueryJson.Bounds bounds = new GameQueryJson.Bounds();
-            bounds.setNeLng(4.0);
-            bounds.setNeLat(4.0);
-            bounds.setSwLng(1.0);
-            bounds.setSwLat(1.0);
-            gameQueryJson.setBounds(bounds);
+            gameQuery.setGyms(false);
+            gameQuery.setPokestops(false);
+            gameQuery.setPokemons(true);
 
-            PokemonFilter showOnly1 = new PokemonFilter(gameQueryJson);
+            gameQuery.setSelectedPokemons("AgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
+            gameQuery.setShowOrHide(false);
+
+            gameQuery.setNeLng(4.0);
+            gameQuery.setNeLat(4.0);
+            gameQuery.setSwLng(1.0);
+            gameQuery.setSwLat(1.0);
+
+            gameQuery.setSince(null);
+
+            PokemonFilter showOnly1 = new PokemonFilter(gameQuery);
             Collection<Pokemon> showOnly1Result = showOnly1.doFilter(allPokemons);
 
             Assert.assertTrue("It should only show pokemons with not ID 1",
@@ -171,22 +173,20 @@ public class PokemonFilterTest {
 
         // It should not filter any pokemons
         {
-            GameQueryJson gameQueryJson = new GameQueryJson();
-            gameQueryJson.setGyms(false);
-            gameQueryJson.setPokestops(false);
-            gameQueryJson.setPokemons(true);
-            gameQueryJson.setSince(null);
-            gameQueryJson.setSelectedPokemons(Collections.emptyList());
-            gameQueryJson.setShowOrHide(true);
+            GameQuery gameQuery = new GameQuery();
+            gameQuery.setGyms(false);
+            gameQuery.setPokestops(false);
+            gameQuery.setPokemons(true);
+            gameQuery.setSince(null);
+            gameQuery.setSelectedPokemons("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==");
+            gameQuery.setShowOrHide(true);
 
-            GameQueryJson.Bounds bounds = new GameQueryJson.Bounds();
-            bounds.setNeLng(4.0);
-            bounds.setNeLat(4.0);
-            bounds.setSwLng(1.0);
-            bounds.setSwLat(1.0);
-            gameQueryJson.setBounds(bounds);
+            gameQuery.setNeLng(4.0);
+            gameQuery.setNeLat(4.0);
+            gameQuery.setSwLng(1.0);
+            gameQuery.setSwLat(1.0);
 
-            PokemonFilter showOnly1 = new PokemonFilter(gameQueryJson);
+            PokemonFilter showOnly1 = new PokemonFilter(gameQuery);
             Collection<Pokemon> showOnly1Result = showOnly1.doFilter(allPokemons);
 
             Assert.assertTrue("It should show all pokemons",
