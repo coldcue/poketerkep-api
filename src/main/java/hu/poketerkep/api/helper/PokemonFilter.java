@@ -1,7 +1,7 @@
 package hu.poketerkep.api.helper;
 
 import hu.poketerkep.api.model.Pokemon;
-import hu.poketerkep.api.rest.query.GameQueryJson;
+import hu.poketerkep.api.rest.query.GameQuery;
 
 import java.time.Instant;
 import java.util.Collection;
@@ -17,12 +17,11 @@ public class PokemonFilter {
     private final Predicate<Pokemon> longitudePredicate;
     private final Predicate<Pokemon> latitudePredicate;
     private final Predicate<Pokemon> typeFilterPredicate;
-    private final GameQueryJson query;
+    private final GameQuery query;
 
-    public PokemonFilter(GameQueryJson query) {
-        final GameQueryJson.Bounds bounds = query.getBounds();
-        final Coordinate northEast = new Coordinate(bounds.getNeLat(), bounds.getNeLng());
-        final Coordinate southWest = new Coordinate(bounds.getSwLat(), bounds.getSwLng());
+    public PokemonFilter(GameQuery query) {
+        final Coordinate northEast = new Coordinate(query.getNeLat(), query.getNeLng());
+        final Coordinate southWest = new Coordinate(query.getSwLat(), query.getSwLng());
         Optional<Long> since = Optional.ofNullable(query.getSince());
         this.query = query;
 
@@ -49,10 +48,11 @@ public class PokemonFilter {
                 && pokemon.getLatitude() <= northEast.getLatitude();
 
         // Sort by type
-        if (query.getSelectedPokemons().size() == 0) {
+        HashSet<Integer> selectedPokemonIds = Base64PokemonIdDecoder.decodePokemonIdsFromBase64(query.getSelectedPokemons());
+        if (selectedPokemonIds.size() == 0) {
             typeFilterPredicate = pokemon -> true;
         } else {
-            typeFilterPredicate = pokemon -> query.isShowOrHide() == query.getSelectedPokemons().contains(pokemon.getPokemonId());
+            typeFilterPredicate = pokemon -> query.isShowOrHide() == selectedPokemonIds.contains(pokemon.getPokemonId());
         }
 
     }
@@ -74,4 +74,6 @@ public class PokemonFilter {
 
         return result;
     }
+
+
 }
