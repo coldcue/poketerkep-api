@@ -1,7 +1,8 @@
 package hu.poketerkep.api.helper;
 
-import hu.poketerkep.api.model.Pokemon;
 import hu.poketerkep.api.rest.query.GameQuery;
+import hu.poketerkep.shared.geo.Coordinate;
+import hu.poketerkep.shared.model.Pokemon;
 
 import java.time.Instant;
 import java.util.Collection;
@@ -20,8 +21,8 @@ public class PokemonFilter {
     private final GameQuery query;
 
     public PokemonFilter(GameQuery query) {
-        final Coordinate northEast = new Coordinate(query.getNeLat(), query.getNeLng());
-        final Coordinate southWest = new Coordinate(query.getSwLat(), query.getSwLng());
+        final Coordinate northEast = Coordinate.fromDegrees(query.getNeLat(), query.getNeLng());
+        final Coordinate southWest = Coordinate.fromDegrees(query.getSwLat(), query.getSwLng());
         Optional<Long> since = Optional.ofNullable(query.getSince());
         this.query = query;
 
