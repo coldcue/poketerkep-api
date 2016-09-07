@@ -19,6 +19,7 @@ import java.util.Arrays;
 public class AppConfig {
 
     private static final String DEVELOPMENT_PROFILE = "development";
+    private static final String TEST_PROFILE = "test";
     @Autowired
     Environment env;
 
@@ -45,7 +46,10 @@ public class AppConfig {
         return new WebMvcConfigurerAdapter() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                if (Arrays.asList(env.getActiveProfiles()).contains(DEVELOPMENT_PROFILE)) {
+                boolean isTestProfile = Arrays.asList(env.getActiveProfiles()).contains(TEST_PROFILE);
+                boolean isDevelopmentProfile = Arrays.asList(env.getActiveProfiles()).contains(DEVELOPMENT_PROFILE);
+
+                if (isTestProfile || isDevelopmentProfile) {
                     registry.addMapping("/**").allowedOrigins("*");
                 } else {
                     registry.addMapping("/**").allowedOrigins("https://www.poketerkep.hu");
