@@ -33,15 +33,17 @@ configurations {
 }
 
 dependencies {
+    compile('org.springframework.boot:spring-boot-starter')
     compile('org.springframework.boot:spring-boot-starter-web')
-    compile('com.amazonaws:aws-java-sdk:1.11.24')
+    compile('com.amazonaws:aws-java-sdk:1.11.+')
     compile project(':poketerkep-shared')
 
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile "org.mockito:mockito-core:1.+"
     testCompile project(path: ':poketerkep-shared', configuration: "tests")
+    testCompile 'junit:junit:4.12'
 
-    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat:1.4.0.RELEASE")
+    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 }
 
 idea {
