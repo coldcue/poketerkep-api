@@ -4,7 +4,7 @@ import hu.poketerkep.api.helper.PokemonFilter;
 import hu.poketerkep.api.json.PokemonJsonDto;
 import hu.poketerkep.api.json.RawDataJsonDto;
 import hu.poketerkep.api.mapper.PokemonMapper;
-import hu.poketerkep.api.model.Pokemon;
+import hu.poketerkep.shared.model.Pokemon;
 import hu.poketerkep.api.rest.query.GameQuery;
 import hu.poketerkep.api.service.PokemonDataService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class GameController {
 
         // Get and filter pokemons
         PokemonFilter pokemonFilter = new PokemonFilter(query);
-        Collection<Pokemon> pokemons = pokemonFilter.doFilter(pokemonDataService.getAllPokemons());
+        Collection<Pokemon> pokemons = pokemonFilter.doFilter(pokemonDataService.getAllPokemons(query));
 
         // Map to JSON DTO
         RawDataJsonDto rawData = new RawDataJsonDto();
