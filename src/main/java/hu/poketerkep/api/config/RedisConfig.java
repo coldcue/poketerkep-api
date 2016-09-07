@@ -12,7 +12,7 @@ public class RedisConfig {
 
     @Configuration
     @Profile("default")
-    public class DevelopmentRedisConfig {
+    public class ProductionRedisConfig {
         @Bean
         JedisPool jedisPool() {
             return new JedisPool(new JedisPoolConfig(), "poketerkep-cache.4wfczw.0001.euw1.cache.amazonaws.com", 6379);
@@ -26,7 +26,7 @@ public class RedisConfig {
 
     @Configuration
     @Profile("development")
-    public class ProductionRedisConfig {
+    public class DevelopmentRedisConfig {
         @Bean
         JedisPool jedisPool() {
             return new JedisPool(new JedisPoolConfig(), "localhost");
