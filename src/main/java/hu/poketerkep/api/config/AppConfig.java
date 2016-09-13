@@ -1,25 +1,60 @@
 package hu.poketerkep.api.config;
 
+import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBAsync;
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBAsyncClientBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.core.env.Environment;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.Arrays;
 
 @Configuration
-@EnableAsync
 public class AppConfig {
 
+    private static final String DEVELOPMENT_PROFILE = "development";
+    private static final String TEST_PROFILE = "test";
+    @Autowired
+    Environment env;
+
     /**
-     * This Executor Service provides threads for Async tasks
+     * Default AWS Credentials
+     * http://docs.aws.amazon.com/java-sdk/latest/developer-guide/credentials.html
      *
-     * @return
+     * @return AWS Credentials
      */
     @Bean
-    public ExecutorService executorService() {
-        return Executors.newFixedThreadPool(LocalConstants.MAX_THREADS);
+    AWSCredentialsProvider awsCredentialsProvider() {
+        return new DefaultAWSCredentialsProviderChain();
     }
 
+    @Bean
+    AmazonDynamoDBAsync amazonDynamoDBAsync() {
+        return AmazonDynamoDBAsyncClientBuilder.standard()
+                .withCredentials(awsCredentialsProvider())
+                .withRegion(Regions.EU_WEST_1).build();
+    }
 
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurerAdapter() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                boolean isTestProfile = Arrays.asList(env.getActiveProfiles()).contains(TEST_PROFILE);
+                boolean isDevelopmentProfile = Arrays.asList(env.getActiveProfiles()).contains(DEVELOPMENT_PROFILE);
+
+                if (isTestProfile || isDevelopmentProfile) {
+                    registry.addMapping("/**").allowedOrigins("*");
+                } else {
+                    registry.addMapping("/**").allowedOrigins("https://www.poketerkep.hu");
+                }
+            }
+        };
+    }
 }
