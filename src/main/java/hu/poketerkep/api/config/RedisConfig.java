@@ -1,6 +1,7 @@
 package hu.poketerkep.api.config;
 
 import hu.poketerkep.shared.datasource.PokemonDataSource;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -13,9 +14,12 @@ public class RedisConfig {
     @Configuration
     @Profile("default")
     public class ProductionRedisConfig {
+        @Value("${redis.server.host}")
+        private String redisServerHost;
+
         @Bean
         JedisPool jedisPool() {
-            return new JedisPool(new JedisPoolConfig(), "172.30.1.104");
+            return new JedisPool(new JedisPoolConfig(), redisServerHost);
         }
 
         @Bean
@@ -29,7 +33,11 @@ public class RedisConfig {
     public class DevelopmentRedisConfig {
         @Bean
         JedisPool jedisPool() {
-            return new JedisPool(new JedisPoolConfig(), "localhost");
+            JedisPoolConfig poolConfig = new JedisPoolConfig();
+            poolConfig.setBlockWhenExhausted(true);
+            poolConfig.setMaxWaitMillis(LocalConstants.MAX_WAIT_FOR_REDIS);
+
+            return new JedisPool(poolConfig, "localhost");
         }
 
         @Bean

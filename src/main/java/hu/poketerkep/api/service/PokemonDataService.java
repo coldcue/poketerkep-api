@@ -6,6 +6,7 @@ import hu.poketerkep.shared.geo.Coordinate;
 import hu.poketerkep.shared.model.Pokemon;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import redis.clients.jedis.exceptions.JedisException;
 
 import java.util.Set;
 
@@ -23,7 +24,7 @@ public class PokemonDataService {
      *
      * @return all pokemons
      */
-    public Set<Pokemon> getAllPokemons(GameQuery gameQuery) {
+    public Set<Pokemon> getAllPokemons(GameQuery gameQuery) throws JedisException {
         double latitude = (gameQuery.getNeLat() + gameQuery.getSwLat()) / 2;
         double longitude = (gameQuery.getNeLng() + gameQuery.getSwLng()) / 2;
 
