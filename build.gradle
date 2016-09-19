@@ -19,7 +19,9 @@ war {
     baseName = 'poketerkep-api'
     version = '0.1'
 }
+//noinspection GroovyUnusedAssignment
 sourceCompatibility = 1.8
+//noinspection GroovyUnusedAssignment
 targetCompatibility = 1.8
 
 repositories {
@@ -31,15 +33,25 @@ configurations {
 }
 
 dependencies {
-    //compile('org.springframework.boot:spring-boot-starter-actuator')
-    //compile('org.springframework.boot:spring-boot-starter-cache')
-    //compile('org.springframework.cloud:spring-cloud-starter-aws')
-    //compile('org.springframework.boot:spring-boot-starter-security')
-    //compile('org.springframework.boot:spring-boot-starter-social-facebook')
-    compile('org.springframework.boot:spring-boot-starter-web:1.4.0.RELEASE')
-    //compile('org.springframework.boot:spring-boot-starter-ws')
-    //compile('org.springframework.boot:spring-boot-starter-websocket')
-    compile('com.amazonaws:aws-java-sdk:1.11.24')
-    testCompile('org.springframework.boot:spring-boot-starter-test:1.4.0.RELEASE')
-    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat:1.4.0.RELEASE")
+    compile('org.springframework.boot:spring-boot-starter')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('com.amazonaws:aws-java-sdk:1.11.+')
+    compile project(':poketerkep-shared')
+
+    testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile "org.mockito:mockito-core:1.+"
+    testCompile project(path: ':poketerkep-shared', configuration: "tests")
+    testCompile 'junit:junit:4.12'
+
+    providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+}
+
+idea {
+    project {
+        languageLevel = '1.8'
+    }
+    module {
+        downloadJavadoc = true // defaults to false
+        downloadSources = true
+    }
 }
