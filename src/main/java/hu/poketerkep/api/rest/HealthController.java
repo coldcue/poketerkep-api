@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 
@@ -18,10 +17,10 @@ public class HealthController {
     }
 
     @RequestMapping("/health")
-    ResponseEntity health() throws Exception {
+    ResponseEntity<String> health() throws Exception {
         //Test jedisPool (it will throw an exception)
-        Jedis resource = jedisPool.getResource();
+        //Jedis resource = jedisPool.getResource();
 
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok("OK");
     }
 }

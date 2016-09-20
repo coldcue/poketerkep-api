@@ -19,7 +19,17 @@ public class RedisConfig {
 
         @Bean
         JedisPool jedisPool() {
-            return new JedisPool(new JedisPoolConfig(), redisServerHost);
+            JedisPoolConfig poolConfig = new JedisPoolConfig();
+
+            //Set the total pools to handle many requests
+            poolConfig.setMaxTotal(128);
+
+            //Disable pings for faster responses
+            poolConfig.setTestWhileIdle(false);
+            poolConfig.setTestOnBorrow(false);
+            poolConfig.setTestOnReturn(false);
+
+            return new JedisPool(poolConfig, redisServerHost);
         }
 
         @Bean
@@ -33,11 +43,7 @@ public class RedisConfig {
     public class DevelopmentRedisConfig {
         @Bean
         JedisPool jedisPool() {
-            JedisPoolConfig poolConfig = new JedisPoolConfig();
-            poolConfig.setBlockWhenExhausted(true);
-            poolConfig.setMaxWaitMillis(LocalConstants.MAX_WAIT_FOR_REDIS);
-
-            return new JedisPool(poolConfig, "localhost");
+            return new JedisPool(new JedisPoolConfig(), "localhost");
         }
 
         @Bean
