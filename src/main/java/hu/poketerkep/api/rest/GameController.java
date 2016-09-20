@@ -20,11 +20,13 @@ import java.time.Instant;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Logger;
 
 
 @RestController
 @RequestMapping("/game")
 public class GameController {
+    private final Logger log = Logger.getLogger(this.getClass().getName());
     private final PokemonDataService pokemonDataService;
 
     @Autowired
@@ -40,7 +42,8 @@ public class GameController {
         try {
             allPokemons = pokemonDataService.getAllPokemons(query);
         } catch (JedisException e) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            log.severe("There was a problem with Jedis: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
         }
 
         PokemonFilter pokemonFilter = new PokemonFilter(query);

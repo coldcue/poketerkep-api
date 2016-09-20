@@ -22,12 +22,9 @@ public class RedisConfig {
             JedisPoolConfig poolConfig = new JedisPoolConfig();
 
             //Set the total pools to handle many requests
-            poolConfig.setMaxTotal(128);
-
-            //Disable pings for faster responses
-            poolConfig.setTestWhileIdle(false);
-            poolConfig.setTestOnBorrow(false);
-            poolConfig.setTestOnReturn(false);
+            poolConfig.setMaxTotal(32);
+            poolConfig.setMaxIdle(32);
+            poolConfig.setMinIdle(0);
 
             return new JedisPool(poolConfig, redisServerHost);
         }
