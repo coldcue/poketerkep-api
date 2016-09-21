@@ -22,9 +22,17 @@ public class RedisConfig {
             JedisPoolConfig poolConfig = new JedisPoolConfig();
 
             //Set the total pools to handle many requests
-            poolConfig.setMaxTotal(32);
-            poolConfig.setMaxIdle(32);
-            poolConfig.setMinIdle(0);
+            poolConfig.setMaxTotal(64);
+            poolConfig.setMaxIdle(64);
+
+            // This has to be set, otherwise there will be a 100% cpu problem
+            poolConfig.setMinIdle(8);
+
+            //Disable tests
+            poolConfig.setTestOnCreate(false);
+            poolConfig.setTestOnReturn(false);
+            poolConfig.setTestOnBorrow(false);
+            poolConfig.setTestWhileIdle(false);
 
             return new JedisPool(poolConfig, redisServerHost);
         }
